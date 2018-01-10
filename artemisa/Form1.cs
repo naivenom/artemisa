@@ -57,9 +57,9 @@ namespace artemisa
                         _ip = IPAddress.Parse(subred + _subred);
                         _host = Dns.GetHostEntry(_ip);
 
-                        OutPut.Items.Add(new ListViewItem(new String[] { subred + _subred, _host.HostName, "Up" }));
+                        OutPut.Items.Add(new ListViewItem(new String[] { subred + _subred, _host.HostName, "Ok" }));
                     }
-                    catch { OutPut.Items.Add(new ListViewItem(new String[] { subred + _subred, "Probablemente *nix", "Up" })); }
+                    catch { OutPut.Items.Add(new ListViewItem(new String[] { subred + _subred, "Probablemente *nix", "Ok" })); }
                 }
                 progressBar1.Value += 1;
             }
