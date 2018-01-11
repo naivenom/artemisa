@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,6 +11,7 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using System.Net;
 using System.Management;
+using System.Net.Sockets;
 
 namespace artemisa
 {
@@ -59,7 +60,7 @@ namespace artemisa
 
                         OutPut.Items.Add(new ListViewItem(new String[] { subred + _subred, _host.HostName, "Ok" }));
                     }
-                    catch { OutPut.Items.Add(new ListViewItem(new String[] { subred + _subred, "Probablemente *nix", "Ok" })); }
+                    catch { OutPut.Items.Add(new ListViewItem(new String[] { subred + _subred, "Se desconoce", "Ok" })); }
                 }
                 progressBar1.Value += 1;
             }
@@ -69,9 +70,6 @@ namespace artemisa
             label1.Text = "Realizado con exito!";
             int _contador = OutPut.Items.Count;
             MessageBox.Show("Escaneo realizado!\nEncontrados " + _contador.ToString() + " hosts.", "Hecho", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-
         }
 
         public void _detallesWin(string _host)
@@ -106,6 +104,61 @@ namespace artemisa
             }
         }
 
+        public void _detallesLinux(string _host)
+        {
+            progressBar1.Maximum = 8080;
+            progressBar1.Value = 0;
+            for (int i = 1; i < 8081; i++)
+            {
+                string _puerto = i.ToString();
+                IPEndPoint hostRemoto = new IPEndPoint(IPAddress.Parse(_host), i);
+                label1.ForeColor = System.Drawing.Color.Green;
+                label1.Text = "Escaneando puertos: " + _puerto;
+
+                using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                {
+                    try
+                    {
+                        sock.Connect(hostRemoto);
+                        
+                        if (i == 80)
+                        {
+                            try
+                            {
+                                HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create("http://" + _host);
+                                HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+
+                                string _respuesta = string.Empty;
+                                string _server = string.Empty;
+                                StringBuilder requestBuilder1 = new StringBuilder();
+                                for (int j = 0; j < myHttpWebResponse.Headers.Count; ++j)
+                                {
+                                    requestBuilder1.Append(myHttpWebResponse.Headers.Keys[j] + " " + myHttpWebResponse.Headers[j] + "\n");
+                                    if (myHttpWebResponse.Headers.Keys[j].StartsWith("Server"))
+                                    {
+                                        _server = myHttpWebResponse.Headers[j].Split(' ')[0].Replace("\r", string.Empty) + myHttpWebResponse.Headers[j].Split(' ')[1].Replace("\r", string.Empty);
+                                    }
+                                }
+                                MessageBox.Show("Puerto: " + i + " abierto. "+"Version del servidor web y sistema operativo: " + _server);
+                                OutPut.Items.Add(new ListViewItem(new String[] { i.ToString() }));
+                                myHttpWebResponse.Close();
+                            }
+                            catch (Exception excepcion) { MessageBox.Show("Error en obtencion del sistema operativo.\n\n" + excepcion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                        }
+                        else
+                        {
+                            
+                            OutPut.Items.Add(new ListViewItem(new String[] { i.ToString(), "","Ok"}));
+                        }
+                    }
+                    catch (Exception excepcion) { }
+
+                }
+                progressBar1.Value += 1;
+            }
+          
+        }
+ 
         private void scan_Click(object sender, EventArgs e)
         {
             if (ipAddress.Text == string.Empty)
@@ -138,7 +191,19 @@ namespace artemisa
                         ipAddress.Enabled = false;
                     }
                 }
-                
+                if (deteccionLinux.Checked)
+                {
+                    Thread LThread = new Thread(() => _detallesLinux(ipAddress.Text));
+                    LThread.Start();
+
+                    if (LThread.IsAlive == true)
+                    {
+                        stop.Enabled = true;
+                        scan.Enabled = false;
+                        ipAddress.Enabled = false;
+                    }
+                }
+
             }
         }
 
@@ -167,8 +232,9 @@ namespace artemisa
 
         }
 
-    
+        private void deteccionLinux_CheckedChanged(object sender, EventArgs e)
+        {
 
-        
+        }
     }
 }
