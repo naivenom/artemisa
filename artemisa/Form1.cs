@@ -108,6 +108,7 @@ namespace artemisa
         {
             progressBar1.Maximum = 8080;
             progressBar1.Value = 0;
+            OutPut.Items.Clear();
             for (int i = 1; i < 8081; i++)
             {
                 string _puerto = i.ToString();
@@ -138,8 +139,7 @@ namespace artemisa
                                         _server = myHttpWebResponse.Headers[j].Split(' ')[0].Replace("\r", string.Empty) + myHttpWebResponse.Headers[j].Split(' ')[1].Replace("\r", string.Empty);
                                     }
                                 }
-                                MessageBox.Show("Puerto: " + i + " abierto. "+"Version del servidor web y sistema operativo: " + _server);
-                                OutPut.Items.Add(new ListViewItem(new String[] { i.ToString(), "","Abierto" }));
+                                OutPut.Items.Add(new ListViewItem(new String[] { i.ToString(), _server , "Abierto" }));
                                 myHttpWebResponse.Close();
                             }
                             catch (Exception excepcion) { MessageBox.Show("Error en obtencion del sistema operativo.\n\n" + excepcion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
