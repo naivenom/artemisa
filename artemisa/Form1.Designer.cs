@@ -1,4 +1,4 @@
-﻿namespace artemisa
+namespace artemisa
 {
     partial class Form1
     {
@@ -40,12 +40,13 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.escanerDeRed = new System.Windows.Forms.RadioButton();
             this.deteccion = new System.Windows.Forms.RadioButton();
+            this.deteccionPuertos = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // ipAddress
             // 
-            this.ipAddress.Location = new System.Drawing.Point(672, 119);
+            this.ipAddress.Location = new System.Drawing.Point(672, 92);
             this.ipAddress.Name = "ipAddress";
             this.ipAddress.Size = new System.Drawing.Size(156, 22);
             this.ipAddress.TabIndex = 0;
@@ -75,7 +76,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(669, 99);
+            this.label1.Location = new System.Drawing.Point(669, 69);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 17);
             this.label1.TabIndex = 4;
@@ -98,7 +99,7 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Direccion IP";
+            this.columnHeader1.Text = "IP/Puerto";
             this.columnHeader1.Width = 95;
             // 
             // columnHeader2
@@ -150,12 +151,25 @@
             this.deteccion.Text = "Deteccion OS y Usuario (Windows)";
             this.deteccion.UseVisualStyleBackColor = true;
             // 
+            // deteccionPuertos
+            // 
+            this.deteccionPuertos.AutoSize = true;
+            this.deteccionPuertos.Location = new System.Drawing.Point(672, 121);
+            this.deteccionPuertos.Name = "deteccionPuertos";
+            this.deteccionPuertos.Size = new System.Drawing.Size(153, 21);
+            this.deteccionPuertos.TabIndex = 10;
+            this.deteccionPuertos.TabStop = true;
+            this.deteccionPuertos.Text = "Escaner de puertos";
+            this.deteccionPuertos.UseVisualStyleBackColor = true;
+            this.deteccionPuertos.CheckedChanged += new System.EventHandler(this.deteccionLinux_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(933, 403);
+            this.Controls.Add(this.deteccionPuertos);
             this.Controls.Add(this.deteccion);
             this.Controls.Add(this.escanerDeRed);
             this.Controls.Add(this.OutPut);
@@ -187,6 +201,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.RadioButton escanerDeRed;
         private System.Windows.Forms.RadioButton deteccion;
+        private System.Windows.Forms.RadioButton deteccionPuertos;
     }
 }
-
