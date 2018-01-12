@@ -104,7 +104,7 @@ namespace artemisa
             }
         }
 
-        public void _detallesLinux(string _host)
+        public void _detallesPuertos(string _host)
         {
             progressBar1.Maximum = 8080;
             progressBar1.Value = 0;
@@ -120,7 +120,6 @@ namespace artemisa
                     try
                     {
                         sock.Connect(hostRemoto);
-                        
                         if (i == 80)
                         {
                             try
@@ -140,15 +139,14 @@ namespace artemisa
                                     }
                                 }
                                 MessageBox.Show("Puerto: " + i + " abierto. "+"Version del servidor web y sistema operativo: " + _server);
-                                OutPut.Items.Add(new ListViewItem(new String[] { i.ToString() }));
+                                OutPut.Items.Add(new ListViewItem(new String[] { i.ToString(), "","Abierto" }));
                                 myHttpWebResponse.Close();
                             }
                             catch (Exception excepcion) { MessageBox.Show("Error en obtencion del sistema operativo.\n\n" + excepcion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
                         }
                         else
                         {
-                            
-                            OutPut.Items.Add(new ListViewItem(new String[] { i.ToString(), "","Ok"}));
+                            OutPut.Items.Add(new ListViewItem(new String[] { i.ToString(), "","Abierto"}));
                         }
                     }
                     catch (Exception excepcion) { }
@@ -191,9 +189,9 @@ namespace artemisa
                         ipAddress.Enabled = false;
                     }
                 }
-                if (deteccionLinux.Checked)
+                if (deteccionPuertos.Checked)
                 {
-                    Thread LThread = new Thread(() => _detallesLinux(ipAddress.Text));
+                    Thread LThread = new Thread(() => _detallesPuertos(ipAddress.Text));
                     LThread.Start();
 
                     if (LThread.IsAlive == true)
