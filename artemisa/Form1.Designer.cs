@@ -104,7 +104,7 @@ namespace artemisa
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "Nombre del Host";
+            this.columnHeader2.Text = "Info";
             this.columnHeader2.Width = 180;
             // 
             // columnHeader3
