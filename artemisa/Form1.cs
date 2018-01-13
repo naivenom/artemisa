@@ -154,25 +154,32 @@ namespace artemisa
                         }
                         else if (_puertosConocidos[i] == 22 || _puertosConocidos[i] == 21)
                         {
-                            Thread ftpThread = new Thread(() => _ftpanonymousHabilitado(_host));
-                            ftpThread.Start();
-                            using (TcpClient client = new TcpClient(_host, _puertosConocidos[i]))
+                            if (_puertosConocidos[i] == 21)
                             {
-                                using(Stream stream = client.GetStream())
+                                Thread ftpThread = new Thread(() => _ftpanonymousHabilitado(_host));
+                                ftpThread.Start();
+                            }
+                            else if (_puertosConocidos[i] == 22 || _puertosConocidos[i] == 21)
+                            {
+                                using (TcpClient client = new TcpClient(_host, _puertosConocidos[i]))
                                 {
-                                    using (StreamReader lectura = new StreamReader(stream))
+                                    using (Stream stream = client.GetStream())
                                     {
-                                        while(true)
+                                        using (StreamReader lectura = new StreamReader(stream))
                                         {
-                                            string _version = lectura.ReadLine();
-                                            OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), _version, "Abierto" }));
-                                            lectura.Close();
-                                            stream.Close();
-                                            client.Close();
+                                            while (true)
+                                            {
+                                                string _version = lectura.ReadLine();
+                                                OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), _version, "Abierto" }));
+                                                lectura.Close();
+                                                stream.Close();
+                                                client.Close();
+                                            }
                                         }
                                     }
                                 }
                             }
+                                
                         }
 
                         else
