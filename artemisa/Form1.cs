@@ -250,7 +250,7 @@ namespace artemisa
             }
             catch
             {
-                // Ignore all irrelevant exceptions
+                // Ignora las excepciones irrelevantes
             }
 
             return string.Empty;
