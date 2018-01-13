@@ -12,6 +12,7 @@ using System.Threading;
 using System.Net;
 using System.Management;
 using System.Net.Sockets;
+using System.IO;
 
 namespace artemisa
 {
@@ -106,22 +107,29 @@ namespace artemisa
 
         public void _detallesPuertos(string _host)
         {
-            progressBar1.Maximum = 8080;
+            progressBar1.Maximum = 157;
             progressBar1.Value = 0;
             OutPut.Items.Clear();
-            for (int i = 1; i < 8081; i++)
+            int[] _puertosConocidos = { 1,5,7,9,11,13,17,18,19,20,21,22,23,25,37,39,42,43,49,50,53,63,66,67,68,69,70,79,80,88,95,101,107,109,110,111,113,115,117,119,
+                                123,135,137,138,139,143,161,162,174,177,178,179,194,199,201,202,204,206,209,210,213,220,245,347,363,369,370,372,389,427,434,
+                                435,443,444,445,465,500,512,513,514,515,520,587,591,631,666,690,993,995,1080,1337,1352,1433,1434,1494,1512,1521,1701,1720,1723,1761,
+                                1863,1935,2049,2082,2083,2086,2427,3030,3074,3128,3306,3389,3396,3690,4662,4672,4899,5000,5060,5190,5222,5223,5269,5432,5517,5631,5632,
+                                5400,5500,5600,5700,5800,5900,6000,6112,6129,6346,6347,6348,6349,6350,6355,6667,6881,6969,7100,8000,8080,8118,9009,9898,10000,19226,12345,25565,31337,45003 };
+            for (int i = 1; i < 158; i++)
             {
                 string _puerto = i.ToString();
-                IPEndPoint hostRemoto = new IPEndPoint(IPAddress.Parse(_host), i);
+                IPEndPoint hostRemoto = new IPEndPoint(IPAddress.Parse(_host), _puertosConocidos[i]);
                 label1.ForeColor = System.Drawing.Color.Green;
-                label1.Text = "Escaneando puertos: " + _puerto;
+                label1.Text = "Escaneando puertos: " + _puertosConocidos[i];
 
                 using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                 {
                     try
                     {
                         sock.Connect(hostRemoto);
-                        if (i == 80)
+
+                        if (_puertosConocidos[i] == 80)
+                            
                         {
                             try
                             {
@@ -139,15 +147,39 @@ namespace artemisa
                                         _server = myHttpWebResponse.Headers[j].Split(' ')[0].Replace("\r", string.Empty) + myHttpWebResponse.Headers[j].Split(' ')[1].Replace("\r", string.Empty);
                                     }
                                 }
-                                OutPut.Items.Add(new ListViewItem(new String[] { i.ToString(), _server , "Abierto" }));
+                                OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), _server , "Abierto" }));
                                 myHttpWebResponse.Close();
                             }
                             catch (Exception excepcion) { MessageBox.Show("Error en obtencion del sistema operativo.\n\n" + excepcion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
                         }
+                        else if (_puertosConocidos[i] == 22 || _puertosConocidos[i] == 21)
+                        {
+                            Thread ftpThread = new Thread(() => _ftpanonymousHabilitado(_host));
+                            ftpThread.Start();
+                            using (TcpClient client = new TcpClient(_host, _puertosConocidos[i]))
+                            {
+                                using(Stream stream = client.GetStream())
+                                {
+                                    using (StreamReader lectura = new StreamReader(stream))
+                                    {
+                                        while(true)
+                                        {
+                                            string _version = lectura.ReadLine();
+                                            OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), _version, "Abierto" }));
+                                            lectura.Close();
+                                            stream.Close();
+                                            client.Close();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         else
                         {
-                            OutPut.Items.Add(new ListViewItem(new String[] { i.ToString(), "","Abierto"}));
+                            OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), "","Abierto"}));
                         }
+
                     }
                     catch (Exception excepcion) { }
 
@@ -156,7 +188,73 @@ namespace artemisa
             }
           
         }
- 
+        public static void _ftpanonymousHabilitado(string _host)
+        {
+            
+            var port = 21;
+            var userName = "anonymous";
+            var password = "anonymous";
+            
+
+            var tcpClient = new TcpClient();
+            try
+            {
+                tcpClient.Connect(_host, port);
+                Flush(tcpClient);
+
+                var response = TransmitCommand(tcpClient, "user " + userName);
+                if (response.IndexOf("331", StringComparison.OrdinalIgnoreCase) < 0)
+                    throw new Exception(string.Format("Error \"{0}\" mientras se envia user \"{1}\".", response, userName));
+
+                response = TransmitCommand(tcpClient, "pass " + password);
+                MessageBox.Show("Anonymous habilitado: " + response , "FTP", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (response.IndexOf("230", StringComparison.OrdinalIgnoreCase) < 0)
+                {
+                    throw new Exception(string.Format("Error \"{0}\" mientras se envia pass.", response));
+                }
+                
+            }
+            finally
+            {
+                if (tcpClient.Connected)
+                    tcpClient.Close();
+            }
+        }
+
+        private static string TransmitCommand(TcpClient tcpClient, string cmd)
+        {
+            var networkStream = tcpClient.GetStream();
+            if (!networkStream.CanWrite || !networkStream.CanRead)
+                return string.Empty;
+
+            var sendBytes = Encoding.ASCII.GetBytes(cmd + "\r\n");
+            networkStream.Write(sendBytes, 0, sendBytes.Length);
+
+            var streamReader = new StreamReader(networkStream);
+            return streamReader.ReadLine();
+        }
+
+        private static string Flush(TcpClient tcpClient)
+        {
+            try
+            {
+                var networkStream = tcpClient.GetStream();
+                if (!networkStream.CanWrite || !networkStream.CanRead)
+                    return string.Empty;
+
+                var receiveBytes = new byte[tcpClient.ReceiveBufferSize];
+                networkStream.ReadTimeout = 10000;
+                networkStream.Read(receiveBytes, 0, tcpClient.ReceiveBufferSize);
+
+                return Encoding.ASCII.GetString(receiveBytes);
+            }
+            catch
+            {
+                // Ignore all irrelevant exceptions
+            }
+
+            return string.Empty;
+        }
         private void scan_Click(object sender, EventArgs e)
         {
             if (ipAddress.Text == string.Empty)
