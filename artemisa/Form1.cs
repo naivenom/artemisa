@@ -154,32 +154,32 @@ namespace artemisa
                         }
                         else if (_puertosConocidos[i] == 22 || _puertosConocidos[i] == 21)
                         {
-                            if (_puertosConocidos[i] == 21)
+
+                            
+                            using (TcpClient client = new TcpClient(_host, _puertosConocidos[i]))
                             {
-                                Thread ftpThread = new Thread(() => _ftpanonymousHabilitado(_host));
-                                ftpThread.Start();
-                            }
-                            else if (_puertosConocidos[i] == 22 || _puertosConocidos[i] == 21)
-                            {
-                                using (TcpClient client = new TcpClient(_host, _puertosConocidos[i]))
+                                using(Stream stream = client.GetStream())
                                 {
-                                    using (Stream stream = client.GetStream())
+                                    using (StreamReader lectura = new StreamReader(stream))
                                     {
-                                        using (StreamReader lectura = new StreamReader(stream))
+                                        while(true)
                                         {
-                                            while (true)
+                                            string _version = lectura.ReadLine();
+                                            OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), _version, "Abierto" }));
+                                            lectura.Close();
+                                            stream.Close();
+                                            client.Close();
+                                            if (_puertosConocidos[i] == 21)
                                             {
-                                                string _version = lectura.ReadLine();
-                                                OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), _version, "Abierto" }));
-                                                lectura.Close();
-                                                stream.Close();
-                                                client.Close();
+                                                Thread ftpThread = new Thread(() => _ftpanonymousHabilitado(_host));
+                                                ftpThread.Start();
                                             }
+                                                
                                         }
                                     }
                                 }
                             }
-                                
+
                         }
 
                         else
