@@ -46,7 +46,7 @@ namespace artemisa
             // 
             // ipAddress
             // 
-            this.ipAddress.Location = new System.Drawing.Point(672, 92);
+            this.ipAddress.Location = new System.Drawing.Point(762, 89);
             this.ipAddress.Name = "ipAddress";
             this.ipAddress.Size = new System.Drawing.Size(156, 22);
             this.ipAddress.TabIndex = 0;
@@ -54,7 +54,7 @@ namespace artemisa
             // 
             // stop
             // 
-            this.stop.Location = new System.Drawing.Point(753, 201);
+            this.stop.Location = new System.Drawing.Point(843, 198);
             this.stop.Name = "stop";
             this.stop.Size = new System.Drawing.Size(75, 30);
             this.stop.TabIndex = 2;
@@ -64,7 +64,7 @@ namespace artemisa
             // 
             // scan
             // 
-            this.scan.Location = new System.Drawing.Point(672, 201);
+            this.scan.Location = new System.Drawing.Point(762, 198);
             this.scan.Name = "scan";
             this.scan.Size = new System.Drawing.Size(75, 30);
             this.scan.TabIndex = 3;
@@ -76,7 +76,7 @@ namespace artemisa
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(669, 69);
+            this.label1.Location = new System.Drawing.Point(759, 69);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 17);
             this.label1.TabIndex = 4;
@@ -91,7 +91,7 @@ namespace artemisa
             this.columnHeader3});
             this.OutPut.Location = new System.Drawing.Point(4, 1);
             this.OutPut.Name = "OutPut";
-            this.OutPut.Size = new System.Drawing.Size(342, 390);
+            this.OutPut.Size = new System.Drawing.Size(462, 390);
             this.OutPut.TabIndex = 1;
             this.OutPut.UseCompatibleStateImageBehavior = false;
             this.OutPut.View = System.Windows.Forms.View.Details;
@@ -105,7 +105,7 @@ namespace artemisa
             // columnHeader2
             // 
             this.columnHeader2.Text = "Info";
-            this.columnHeader2.Width = 180;
+            this.columnHeader2.Width = 300;
             // 
             // columnHeader3
             // 
@@ -114,7 +114,7 @@ namespace artemisa
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(366, 368);
+            this.progressBar1.Location = new System.Drawing.Point(473, 368);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(558, 23);
             this.progressBar1.TabIndex = 6;
@@ -123,7 +123,7 @@ namespace artemisa
             // pictureBox1
             // 
             this.pictureBox1.Image = global::artemisa.Properties.Resources.artemisa;
-            this.pictureBox1.Location = new System.Drawing.Point(352, 79);
+            this.pictureBox1.Location = new System.Drawing.Point(473, 89);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(572, 312);
             this.pictureBox1.TabIndex = 7;
@@ -132,7 +132,7 @@ namespace artemisa
             // escanerDeRed
             // 
             this.escanerDeRed.AutoSize = true;
-            this.escanerDeRed.Location = new System.Drawing.Point(672, 174);
+            this.escanerDeRed.Location = new System.Drawing.Point(762, 171);
             this.escanerDeRed.Name = "escanerDeRed";
             this.escanerDeRed.Size = new System.Drawing.Size(131, 21);
             this.escanerDeRed.TabIndex = 8;
@@ -143,7 +143,7 @@ namespace artemisa
             // deteccion
             // 
             this.deteccion.AutoSize = true;
-            this.deteccion.Location = new System.Drawing.Point(672, 147);
+            this.deteccion.Location = new System.Drawing.Point(762, 144);
             this.deteccion.Name = "deteccion";
             this.deteccion.Size = new System.Drawing.Size(250, 21);
             this.deteccion.TabIndex = 9;
@@ -154,7 +154,7 @@ namespace artemisa
             // deteccionPuertos
             // 
             this.deteccionPuertos.AutoSize = true;
-            this.deteccionPuertos.Location = new System.Drawing.Point(672, 121);
+            this.deteccionPuertos.Location = new System.Drawing.Point(762, 117);
             this.deteccionPuertos.Name = "deteccionPuertos";
             this.deteccionPuertos.Size = new System.Drawing.Size(153, 21);
             this.deteccionPuertos.TabIndex = 10;
@@ -168,7 +168,7 @@ namespace artemisa
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(933, 403);
+            this.ClientSize = new System.Drawing.Size(1039, 403);
             this.Controls.Add(this.deteccionPuertos);
             this.Controls.Add(this.deteccion);
             this.Controls.Add(this.escanerDeRed);
@@ -204,3 +204,4 @@ namespace artemisa
         private System.Windows.Forms.RadioButton deteccionPuertos;
     }
 }
+
