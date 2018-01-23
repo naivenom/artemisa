@@ -120,10 +120,11 @@ namespace artemisa
             {
                 string _puerto = i.ToString();
                 IPEndPoint hostRemoto = new IPEndPoint(IPAddress.Parse(_host), _puertosConocidos[i]);
-                label1.ForeColor = System.Drawing.Color.Green;
+                label1.ForeColor = Color.Green;
                 label1.Text = "Escaneando puertos: " + _puertosConocidos[i];
 
                 using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                //Console.Read();
                 {
                     try
                     {
@@ -182,7 +183,10 @@ namespace artemisa
                             }
 
                         }
-
+                        else if (_puertosConocidos[i] == 139)
+                        {
+                            OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), "NETBIOS Session Service", "Abierto" })); 
+                        }
                         else
                         {
                             OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), "","Abierto"}));
