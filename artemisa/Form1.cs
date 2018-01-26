@@ -130,7 +130,7 @@ namespace artemisa
                     {
                         sock.Connect(hostRemoto);
 
-                        if (_puertosConocidos[i] == 80)
+                        if (_puertosConocidos[i] == 80 || _puertosConocidos[i] == 443)
                             
                         {
                             try
@@ -193,7 +193,7 @@ namespace artemisa
                         }
                         else
                         {
-                            OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), "","Abierto"}));
+                            OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), "Sin información","Abierto"}));
                         }
 
                     }
