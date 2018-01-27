@@ -191,6 +191,10 @@ namespace artemisa
                         {
                             OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), "rpcbind", "Abierto" }));
                         }
+                        else if (_puertosConocidos[i] == 631)
+                        {
+                            OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), "Internet Printing Protocol", "Abierto" }));
+                        }
                         else
                         {
                             OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), "Sin información","Abierto"}));
