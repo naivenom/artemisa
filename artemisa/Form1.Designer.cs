@@ -37,10 +37,10 @@ namespace artemisa
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.escanerDeRed = new System.Windows.Forms.RadioButton();
             this.deteccion = new System.Windows.Forms.RadioButton();
             this.deteccionPuertos = new System.Windows.Forms.RadioButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,18 +116,9 @@ namespace artemisa
             // 
             this.progressBar1.Location = new System.Drawing.Point(473, 368);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(558, 23);
+            this.progressBar1.Size = new System.Drawing.Size(629, 23);
             this.progressBar1.TabIndex = 6;
             this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::artemisa.Properties.Resources.artemisa;
-            this.pictureBox1.Location = new System.Drawing.Point(473, 89);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(572, 312);
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
             // 
             // escanerDeRed
             // 
@@ -163,12 +154,21 @@ namespace artemisa
             this.deteccionPuertos.UseVisualStyleBackColor = true;
             this.deteccionPuertos.CheckedChanged += new System.EventHandler(this.deteccionLinux_CheckedChanged);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::artemisa.Properties.Resources.artemisaa;
+            this.pictureBox1.Location = new System.Drawing.Point(445, 183);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(689, 179);
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(1039, 403);
+            this.ClientSize = new System.Drawing.Size(1114, 403);
             this.Controls.Add(this.deteccionPuertos);
             this.Controls.Add(this.deteccion);
             this.Controls.Add(this.escanerDeRed);
