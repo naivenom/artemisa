@@ -63,7 +63,7 @@ namespace artemisa
                     }
                     catch { OutPut.Items.Add(new ListViewItem(new String[] { subred + _subred, "Se desconoce", "Ok" })); }
                 }
-                progressBar1.Value += 1;
+                progressBar1.Value ++;
             }
             scan.Enabled = true;
             stop.Enabled = false;
@@ -152,7 +152,7 @@ namespace artemisa
                                 OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), _server , "Abierto" }));
                                 myHttpWebResponse.Close();
                             }
-                            catch (Exception excepcion) { MessageBox.Show("Error en obtencion del sistema operativo.\n\n" + excepcion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                            catch (Exception excepcion) { MessageBox.Show("Error en obtencion de la version del server.\n\n" + excepcion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
                         }
                         else if (_puertosConocidos[i] == 22 || _puertosConocidos[i] == 21)
                         {
@@ -195,6 +195,7 @@ namespace artemisa
                         {
                             OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), "Internet Printing Protocol", "Abierto" }));
                         }
+                        
                         else
                         {
                             OutPut.Items.Add(new ListViewItem(new String[] { _puertosConocidos[i].ToString(), "Sin información","Abierto"}));
@@ -204,7 +205,7 @@ namespace artemisa
                     catch (Exception excepcion) { }
 
                 }
-                progressBar1.Value += 1;
+                progressBar1.Value ++;
             }
             label1.Text = "Realizado con exito!";
             int _contador = OutPut.Items.Count;
